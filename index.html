@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-<title>Delivery Premium · Ayacucho</title>
+<title>ClashFlash · Ayacucho</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
 <style>
 :root {
@@ -116,6 +116,8 @@ html, body {
 }
 .franja:active { transform: scale(0.96); }
 .franja.selected { border-color: var(--gold); background: #141208; }
+.franja.disabled { opacity: 0.3; cursor: not-allowed; border-style: dashed; }
+.franja.disabled:active { transform: none; }
 
 .franja-time {
   font-family: 'Poppins', sans-serif;
@@ -172,7 +174,7 @@ html, body {
 }
 .hora-ampm-box select {
   background: transparent; border: none; color: var(--gold);
-  font-family: 'Barlow', sans-serif; font-size: 1.1rem; font-weight: 700;
+  font-family: 'Poppins', sans-serif; font-size: 1.1rem; font-weight: 700;
   padding: 18px 8px; width: 100%; outline: none; appearance: none;
   cursor: pointer; text-align: center; letter-spacing: 2px;
 }
@@ -293,7 +295,7 @@ html, body {
 <div class="hero">
   <div class="hero-badge">
     <span class="badge-dot"></span>
-    Delivery · Ayacucho
+    ClashFlash · Ayacucho
     <span class="badge-dot"></span>
   </div>
   <h1>Rápido.<br><em>Preciso.</em><br>En tu puerta.</h1>
@@ -302,7 +304,7 @@ html, body {
     <div class="hstat">
       <div class="hstat-icon">⚡</div>
       <div class="hstat-val">15'</div>
-      <div class="hstat-label">Entrega</div>
+      <div class="hstat-label">Espera</div>
     </div>
     <div class="hstat">
       <div class="hstat-icon">🛵</div>
@@ -331,7 +333,7 @@ html, body {
   <div class="step-bar" id="line2"></div>
   <div class="step-node">
     <div class="step-circle" id="s3">3</div>
-    <div class="step-text" id="sl3">Pedido</div>
+    <div class="step-text" id="sl3">Recojo</div>
   </div>
 </div>
 
@@ -343,18 +345,18 @@ html, body {
     <div class="sec-head-line"></div>
   </div>
   <div class="franjas-grid" id="franjasGrid"></div>
-  <div class="error" id="errFranja">Selecciona una franja horaria.</div>
+  <div class="error" id="errFranja">Selecciona una franja horaria válida.</div>
 </div>
 
 <!-- PASO 2: HORA -->
 <div class="section" id="paso2">
   <div class="sec-head">
     <div class="sec-head-dot"></div>
-    <div class="sec-head-text">¿A qué hora?</div>
+    <div class="sec-head-text">Hora exacta de recojo</div>
     <div class="sec-head-line"></div>
   </div>
   <div class="hora-card show" id="horaCard">
-    <div class="hora-card-title">Hora exacta de entrega</div>
+    <div class="hora-card-title">Selecciona el horario</div>
     <div class="hora-row">
       <div class="hora-box">
         <div class="hora-box-label">Hora</div>
@@ -390,14 +392,14 @@ html, body {
     <div class="hora-result" id="horaResult">
       <div class="hora-result-icon">⏰</div>
       <div class="hora-result-body">
-        Tu entrega llega a las <strong id="horaDisplay">—</strong>.
-        Haz tu pedido antes de las <strong id="horaPrev">—</strong>.
+        Recojo programado a las <strong id="horaDisplay">—</strong>.
+        Promedio de espera: <strong id="horaPrev">—</strong>.
       </div>
     </div>
   </div>
   <div class="error" id="errHora">Ingresa una hora válida en la franja elegida.</div>
   <button class="btn-continue show" id="btnContinue" onclick="irAPaso3()">
-    Continuar → Datos del pedido
+    Continuar → Datos de recojo
   </button>
 </div>
 
@@ -405,7 +407,7 @@ html, body {
 <div class="section" style="padding-bottom:0;" id="paso3head">
   <div class="sec-head">
     <div class="sec-head-dot"></div>
-    <div class="sec-head-text">Datos del pedido</div>
+    <div class="sec-head-text">Datos de recojo</div>
     <div class="sec-head-line"></div>
   </div>
 </div>
@@ -413,11 +415,11 @@ html, body {
 <div class="form-section" id="formSection">
   <div class="pedido-banner">
     <div>
-      <div class="pb-label">Entrega</div>
+      <div class="pb-label">Recojo</div>
       <div class="pb-val" id="bannerHora">—</div>
     </div>
     <div class="pb-right">
-      <div class="pb-prep-label">Pedir antes</div>
+      <div class="pb-prep-label">Promedio de espera</div>
       <div class="pb-prep-val" id="bannerPrep">—</div>
     </div>
   </div>
@@ -433,15 +435,15 @@ html, body {
   </div>
 
   <div class="field">
-    <div class="field-label"><span class="field-label-icon">📦</span> Pedido</div>
-    <textarea id="fPedido" placeholder="Describe con detalle lo que necesitas..."></textarea>
+    <div class="field-label"><span class="field-label-icon">📦</span> Detalles del Pedido</div>
+    <textarea id="fPedido" placeholder="Describe con detalle lo que necesitas recoger..."></textarea>
   </div>
 
   <div class="error" id="errForm">Por favor completa todos los campos.</div>
 
   <button class="btn-wa" onclick="sendOrder()">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    Enviar por WhatsApp
+    Confirmar por WhatsApp
   </button>
 
   <div class="edit-link" onclick="volverHorario()">← Cambiar horario</div>
@@ -449,7 +451,7 @@ html, body {
 
 <!-- FOOTER -->
 <div class="footer">
-  <div class="footer-brand">Delivery <span>·</span> Ayacucho</div>
+  <div class="footer-brand">ClashFlash <span>·</span> Ayacucho</div>
   <div class="footer-sub">1pm – 10pm · 🛵 · Perú</div>
 </div>
 
@@ -459,15 +461,17 @@ html, body {
 const WA = "51931279994";
 
 const FRANJAS = [
-  {label:"1–2 pm", start:13, end:14},
-  {label:"2–3 pm", start:14, end:15},
-  {label:"3–4 pm", start:15, end:16},
-  {label:"4–5 pm", start:16, end:17},
-  {label:"5–6 pm", start:17, end:18},
-  {label:"6–7 pm", start:18, end:19},
-  {label:"7–8 pm", start:19, end:20},
-  {label:"8–9 pm", start:20, end:21},
-  {label:"9–10 pm",start:21, end:22},
+  {label:"12 pm", start:12, end:13, disabled: true},
+  {label:"1 pm", start:13, end:14},
+  {label:"2 pm", start:14, end:15},
+  {label:"3 pm", start:15, end:16},
+  {label:"4 pm", start:16, end:17},
+  {label:"5 pm", start:17, end:18},
+  {label:"6 pm", start:18, end:19},
+  {label:"7 pm", start:19, end:20},
+  {label:"8 pm", start:20, end:21},
+  {label:"9 pm", start:21, end:22},
+  {label:"10 pm",start:22, end:23},
 ];
 
 let selFranja = null;
@@ -477,9 +481,10 @@ function renderFranjas() {
   g.innerHTML = "";
   FRANJAS.forEach((f,i) => {
     const d = document.createElement("div");
-    d.className = "franja" + (selFranja === i ? " selected" : "");
+    d.className = "franja" + (selFranja === i ? " selected" : "") + (f.disabled ? " disabled" : "");
     d.innerHTML = `<div class="franja-time">${f.label}</div><div class="franja-dot"></div>`;
-    d.onclick = () => pickFranja(i);
+    if(!f.disabled) d.onclick = () => pickFranja(i);
+    else d.onclick = () => showToast("Las 12 PM no está disponible para delivery.");
     g.appendChild(d);
   });
 }
@@ -517,7 +522,7 @@ function updateHoraInfo() {
   const h = parseInt(document.getElementById("horaH").value);
   const m = parseInt(document.getElementById("horaM").value);
   if (isNaN(h)||isNaN(m)) { hide("horaResult"); return; }
-  const prev = Math.max(h*60+m-20, 0);
+  const prev = Math.max(h*60+m-15, 0); // Cambio de 20 a 15 min
   document.getElementById("horaDisplay").textContent = to12(h,m);
   document.getElementById("horaPrev").textContent = to12(Math.floor(prev/60), prev%60);
   show("horaResult");
@@ -529,7 +534,7 @@ function irAPaso3() {
   const m = parseInt(document.getElementById("horaM").value);
   if (isNaN(h)||isNaN(m)) { show("errHora"); return; }
   hide("errHora");
-  const prev = Math.max(h*60+m-20, 0);
+  const prev = Math.max(h*60+m-15, 0); // Cambio de 20 a 15 min
   document.getElementById("bannerHora").textContent = to12(h,m);
   document.getElementById("bannerPrep").textContent = to12(Math.floor(prev/60), prev%60);
   document.getElementById("formSection").classList.add("show");
@@ -571,22 +576,22 @@ function sendOrder() {
   const m = parseInt(document.getElementById("horaM").value);
   if (!empresa||!dir||!pedido) { show("errForm"); return; }
   hide("errForm");
-  const prev = Math.max(h*60+m-20,0);
-  const msg =
-    `🛵 *NUEVO PEDIDO*\n\n`+
+  const prev = Math.max(h*60+m-15,0); // Cambio de 20 a 15 min
+  const msg = 
+    `🛵 *NUEVO RECOJO - CLASHFLASH*\n\n`+
     `🏢 *Empresa:* ${empresa}\n`+
     `📍 *Dirección:* ${dir}\n`+
-    `🕐 *Hora de entrega:* ${to12(h,m)}\n`+
-    `⚠️ *Hacer pedido antes de:* ${to12(Math.floor(prev/60),prev%60)}\n`+
+    `🕐 *Hora de recojo:* ${to12(h,m)}\n`+
+    `⚠️ *Confirmar antes de:* ${to12(Math.floor(prev/60),prev%60)}\n`+
     `📦 *Pedido:* ${pedido}\n\n`+
-    `_Delivery · Ayacucho · 15–20 min_`;
+    `_Logística Premium · Ayacucho · 15 min_`;
   window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,"_blank");
   document.getElementById("fEmpresa").value="";
   document.getElementById("fDireccion").value="";
   document.getElementById("fPedido").value="";
   document.getElementById("formSection").classList.remove("show");
   selFranja=null; renderFranjas(); setStep(1);
-  showToast("✓ Pedido enviado — abriendo WhatsApp");
+  showToast("✓ Recojo confirmado — abriendo WhatsApp");
 }
 
 // init
