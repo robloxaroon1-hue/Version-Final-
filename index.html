@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Delivery Premium · Ayacucho</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e0c06a;
+  --gold-dim: #c9a84c22;
+  --black: #0a0a0a;
+  --surface: #111111;
+  --surface2: #181818;
+  --border: #222222;
+  --text: #f0f0f0;
+  --text-dim: #666;
+  --text-faint: #2e2e2e;
+  --red: #8b3030;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  background: var(--black);
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  overscroll-behavior: none;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 48px 24px 36px;
+  text-align: center;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid #2a2a2a;
+  color: var(--text-dim); font-size: 11px; letter-spacing: 3px;
+  text-transform: uppercase; padding: 7px 18px; border-radius: 100px;
+  margin-bottom: 28px;
+}
+.badge-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 3.6rem; font-weight: 400; color: #fff;
+  line-height: 1.05; letter-spacing: -1px; margin-bottom: 12px;
+}
+.hero h1 em { color: var(--gold); font-style: normal; font-weight: 700; }
+
+.hero-tagline {
+  font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 32px; font-weight: 400;
+}
+
+.hero-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+}
+.hstat {
+  padding: 16px 8px; text-align: center;
+  border-right: 1px solid var(--border);
+}
+.hstat:last-child { border-right: none; }
+.hstat-icon { font-size: 22px; margin-bottom: 6px; }
+.hstat-val {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.4rem; font-weight: 700; color: #fff; line-height: 1;
+}
+.hstat-label { font-size: 10px; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+
+/* ── STEPPER ── */
+.stepper {
+  display: flex; align-items: center;
+  padding: 28px 24px 0;
+}
+.step-node { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+.step-circle {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 600; color: var(--text-dim);
+  transition: all 0.3s; background: var(--black);
+}
+.step-circle.active { border-color: var(--gold); color: var(--gold); background: #141208; }
+.step-circle.done { border-color: var(--gold); background: var(--gold); color: #0a0a0a; font-size: 16px; }
+.step-text { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); }
+.step-text.active { color: var(--gold); }
+.step-text.done { color: #555; }
+.step-bar { flex: 1; height: 1px; background: var(--border); margin-bottom: 22px; transition: background 0.3s; }
+.step-bar.done { background: var(--gold); }
+
+/* ── SECTION ── */
+.section { padding: 28px 20px 0; }
+.sec-head {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+}
+.sec-head-dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+.sec-head-text { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); font-weight: 500; white-space: nowrap; }
+.sec-head-line { flex: 1; height: 1px; background: var(--border); }
+
+/* ── FRANJAS ── */
+.franjas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+.franja {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 6px; padding: 22px 6px; text-align: center;
+  cursor: pointer; transition: all 0.15s; user-select: none;
+}
+.franja:active { transform: scale(0.96); }
+.franja.selected { border-color: var(--gold); background: #141208; }
+
+.franja-time {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem; color: #fff; font-weight: 600; line-height: 1.2;
+}
+.franja.selected .franja-time { color: var(--gold); }
+.franja-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--text-faint); margin: 7px auto 0;
+}
+.franja.selected .franja-dot { background: var(--gold); }
+
+/* ── HORA EXACTA ── */
+.hora-card {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 6px; padding: 22px 18px; display: none;
+}
+.hora-card.show { display: block; }
+
+.hora-card-title {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 18px;
+}
+
+.hora-row { display: flex; align-items: center; gap: 10px; }
+
+.hora-box {
+  flex: 1; background: var(--black); border: 1.5px solid var(--border);
+  border-radius: 6px; padding: 0; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.hora-box-label {
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-dim); padding: 8px 12px 4px; border-bottom: 1px solid var(--border);
+}
+.hora-box select {
+  background: transparent; border: none; color: var(--text);
+  font-family: 'Poppins', sans-serif; font-size: 1.8rem; font-weight: 700;
+  padding: 10px 12px; width: 100%; outline: none; appearance: none;
+  cursor: pointer; text-align: center;
+}
+.hora-box select option { background: #111; font-size: 1.2rem; }
+
+.hora-sep {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.8rem; color: var(--gold); font-weight: 700; flex-shrink: 0;
+  margin-bottom: 10px;
+}
+
+.hora-ampm-box {
+  width: 72px; background: var(--black); border: 1.5px solid var(--border);
+  border-radius: 6px; overflow: hidden; display: flex; flex-direction: column;
+}
+.hora-ampm-box select {
+  background: transparent; border: none; color: var(--gold);
+  font-family: 'Barlow', sans-serif; font-size: 1.1rem; font-weight: 700;
+  padding: 18px 8px; width: 100%; outline: none; appearance: none;
+  cursor: pointer; text-align: center; letter-spacing: 2px;
+}
+
+.hora-result {
+  margin-top: 14px; background: var(--black); border: 1px solid var(--border);
+  border-radius: 6px; padding: 14px 16px; display: none;
+}
+.hora-result.show { display: flex; gap: 10px; align-items: flex-start; }
+.hora-result-icon { font-size: 18px; flex-shrink: 0; }
+.hora-result-body { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+.hora-result-body strong { color: var(--text); font-weight: 600; }
+
+/* ── BTN CONTINUAR ── */
+.btn-continue {
+  width: 100%; background: transparent;
+  border: 1.5px solid var(--gold); border-radius: 6px;
+  color: var(--gold); font-family: 'Poppins', sans-serif;
+  font-size: 11px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; padding: 18px;
+  cursor: pointer; margin-top: 16px; transition: all 0.15s;
+  display: none;
+}
+.btn-continue.show { display: block; }
+.btn-continue:active { background: var(--gold-dim); transform: scale(0.98); }
+
+/* ── PEDIDO BANNER ── */
+.pedido-banner {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-left: 3px solid var(--gold); border-radius: 6px;
+  padding: 16px 18px; display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 20px;
+}
+.pb-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 4px; }
+.pb-val { font-family: 'Poppins', sans-serif; font-size: 1.1rem; color: #fff; font-weight: 600; }
+.pb-right { text-align: right; }
+.pb-prep-label { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+.pb-prep-val { font-family: 'Poppins', sans-serif; font-size: 1rem; color: var(--gold); font-weight: 600; }
+
+/* ── FORM ── */
+.form-section { padding: 0 20px; display: none; }
+.form-section.show { display: block; }
+
+.field { margin-bottom: 18px; }
+.field-label {
+  font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+}
+.field-label-icon { font-size: 16px; }
+
+.field input, .field textarea {
+  width: 100%; background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 6px; color: var(--text);
+  padding: 16px 16px; font-family: 'Poppins', sans-serif;
+  font-size: 16px; font-weight: 300; outline: none;
+  transition: border-color 0.15s;
+  -webkit-appearance: none;
+}
+.field input:focus, .field textarea:focus { border-color: var(--gold); }
+.field input::placeholder, .field textarea::placeholder { color: var(--text-faint); }
+.field textarea { resize: none; height: 100px; }
+
+/* ── BTN WHATSAPP ── */
+.btn-wa {
+  width: 100%; background: var(--gold); border: none; border-radius: 6px;
+  color: #0a0a0a; font-family: 'Poppins', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; padding: 20px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  gap: 12px; margin-top: 8px; transition: all 0.15s;
+}
+.btn-wa:active { background: var(--gold-light); transform: scale(0.98); }
+.btn-wa svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+.edit-link {
+  text-align: center; margin-top: 14px; padding-bottom: 4px;
+  font-size: 11px; color: var(--text-dim); letter-spacing: 2px;
+  text-transform: uppercase; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 4px;
+}
+.edit-link:active { color: var(--gold); }
+
+/* ── ERROR ── */
+.error {
+  background: #150f0f; border: 1px solid #2a1a1a;
+  border-left: 3px solid var(--red); border-radius: 6px;
+  padding: 12px 16px; font-size: 12px; color: #a06060;
+  display: none; margin-top: 10px; letter-spacing: 0.5px;
+}
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center; padding: 36px 24px 48px;
+  margin-top: 36px; border-top: 1px solid var(--border);
+}
+.footer-brand {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem; font-weight: 400; color: #fff;
+  letter-spacing: 4px; text-transform: uppercase; margin-bottom: 6px;
+}
+.footer-brand span { color: var(--gold); }
+.footer-sub { font-size: 10px; color: #2a2a2a; letter-spacing: 2px; text-transform: uppercase; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 28px; left: 20px; right: 20px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-top: 2px solid var(--gold); border-radius: 6px;
+  padding: 16px 20px; font-size: 14px; color: var(--text);
+  display: none; z-index: 9999; text-align: center; letter-spacing: 0.5px;
+  box-shadow: 0 8px 32px #00000088;
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    Delivery · Ayacucho
+    <span class="badge-dot"></span>
+  </div>
+  <h1>Rápido.<br><em>Preciso.</em><br>En tu puerta.</h1>
+  <p class="hero-tagline">Servicio empresarial · 1pm – 10pm</p>
+  <div class="hero-stats">
+    <div class="hstat">
+      <div class="hstat-icon">⚡</div>
+      <div class="hstat-val">15'</div>
+      <div class="hstat-label">Entrega</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-icon">🛵</div>
+      <div class="hstat-val">1</div>
+      <div class="hstat-label">Scooter</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-icon">🕙</div>
+      <div class="hstat-val">9h</div>
+      <div class="hstat-label">Servicio</div>
+    </div>
+  </div>
+</div>
+
+<!-- STEPPER -->
+<div class="stepper">
+  <div class="step-node">
+    <div class="step-circle active" id="s1">1</div>
+    <div class="step-text active" id="sl1">Franja</div>
+  </div>
+  <div class="step-bar" id="line1"></div>
+  <div class="step-node">
+    <div class="step-circle" id="s2">2</div>
+    <div class="step-text" id="sl2">Tu hora</div>
+  </div>
+  <div class="step-bar" id="line2"></div>
+  <div class="step-node">
+    <div class="step-circle" id="s3">3</div>
+    <div class="step-text" id="sl3">Pedido</div>
+  </div>
+</div>
+
+<!-- PASO 1: FRANJAS -->
+<div class="section" id="paso1">
+  <div class="sec-head">
+    <div class="sec-head-dot"></div>
+    <div class="sec-head-text">Elige tu franja</div>
+    <div class="sec-head-line"></div>
+  </div>
+  <div class="franjas-grid" id="franjasGrid"></div>
+  <div class="error" id="errFranja">Selecciona una franja horaria.</div>
+</div>
+
+<!-- PASO 2: HORA -->
+<div class="section" id="paso2">
+  <div class="sec-head">
+    <div class="sec-head-dot"></div>
+    <div class="sec-head-text">¿A qué hora?</div>
+    <div class="sec-head-line"></div>
+  </div>
+  <div class="hora-card show" id="horaCard">
+    <div class="hora-card-title">Hora exacta de entrega</div>
+    <div class="hora-row">
+      <div class="hora-box">
+        <div class="hora-box-label">Hora</div>
+        <select id="horaH" onchange="updateHoraInfo()">
+          <option value="">--</option>
+        </select>
+      </div>
+      <div class="hora-sep">:</div>
+      <div class="hora-box">
+        <div class="hora-box-label">Minutos</div>
+        <select id="horaM" onchange="updateHoraInfo()">
+          <option value="">--</option>
+          <option value="0">00</option>
+          <option value="5">05</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+          <option value="30">30</option>
+          <option value="35">35</option>
+          <option value="40">40</option>
+          <option value="45">45</option>
+          <option value="50">50</option>
+          <option value="55">55</option>
+        </select>
+      </div>
+      <div class="hora-ampm-box">
+        <select id="horaAP">
+          <option value="pm">PM</option>
+        </select>
+      </div>
+    </div>
+    <div class="hora-result" id="horaResult">
+      <div class="hora-result-icon">⏰</div>
+      <div class="hora-result-body">
+        Tu entrega llega a las <strong id="horaDisplay">—</strong>.
+        Haz tu pedido antes de las <strong id="horaPrev">—</strong>.
+      </div>
+    </div>
+  </div>
+  <div class="error" id="errHora">Ingresa una hora válida en la franja elegida.</div>
+  <button class="btn-continue show" id="btnContinue" onclick="irAPaso3()">
+    Continuar → Datos del pedido
+  </button>
+</div>
+
+<!-- PASO 3: FORM -->
+<div class="section" style="padding-bottom:0;" id="paso3head">
+  <div class="sec-head">
+    <div class="sec-head-dot"></div>
+    <div class="sec-head-text">Datos del pedido</div>
+    <div class="sec-head-line"></div>
+  </div>
+</div>
+
+<div class="form-section" id="formSection">
+  <div class="pedido-banner">
+    <div>
+      <div class="pb-label">Entrega</div>
+      <div class="pb-val" id="bannerHora">—</div>
+    </div>
+    <div class="pb-right">
+      <div class="pb-prep-label">Pedir antes</div>
+      <div class="pb-prep-val" id="bannerPrep">—</div>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="field-label"><span class="field-label-icon">🏢</span> Empresa</div>
+    <input type="text" id="fEmpresa" placeholder="Nombre de tu empresa" autocomplete="organization"/>
+  </div>
+
+  <div class="field">
+    <div class="field-label"><span class="field-label-icon">📍</span> Dirección</div>
+    <input type="text" id="fDireccion" placeholder="Jr. Lima 245, Centro, Ayacucho" autocomplete="street-address"/>
+  </div>
+
+  <div class="field">
+    <div class="field-label"><span class="field-label-icon">📦</span> Pedido</div>
+    <textarea id="fPedido" placeholder="Describe con detalle lo que necesitas..."></textarea>
+  </div>
+
+  <div class="error" id="errForm">Por favor completa todos los campos.</div>
+
+  <button class="btn-wa" onclick="sendOrder()">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Enviar por WhatsApp
+  </button>
+
+  <div class="edit-link" onclick="volverHorario()">← Cambiar horario</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">Delivery <span>·</span> Ayacucho</div>
+  <div class="footer-sub">1pm – 10pm · 🛵 · Perú</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const WA = "51931279994";
+
+const FRANJAS = [
+  {label:"1–2 pm", start:13, end:14},
+  {label:"2–3 pm", start:14, end:15},
+  {label:"3–4 pm", start:15, end:16},
+  {label:"4–5 pm", start:16, end:17},
+  {label:"5–6 pm", start:17, end:18},
+  {label:"6–7 pm", start:18, end:19},
+  {label:"7–8 pm", start:19, end:20},
+  {label:"8–9 pm", start:20, end:21},
+  {label:"9–10 pm",start:21, end:22},
+];
+
+let selFranja = null;
+
+function renderFranjas() {
+  const g = document.getElementById("franjasGrid");
+  g.innerHTML = "";
+  FRANJAS.forEach((f,i) => {
+    const d = document.createElement("div");
+    d.className = "franja" + (selFranja === i ? " selected" : "");
+    d.innerHTML = `<div class="franja-time">${f.label}</div><div class="franja-dot"></div>`;
+    d.onclick = () => pickFranja(i);
+    g.appendChild(d);
+  });
+}
+
+function pickFranja(i) {
+  selFranja = i;
+  hide("errFranja");
+  renderFranjas();
+  fillHoras(i);
+  setStep(2);
+  setTimeout(() => { document.getElementById("paso2").scrollIntoView({behavior:"smooth", block:"start"}); }, 80);
+}
+
+function fillHoras(fi) {
+  const f = FRANJAS[fi];
+  const sel = document.getElementById("horaH");
+  sel.innerHTML = '<option value="">--</option>';
+  for (let h = f.start; h < f.end; h++) {
+    const d12 = h > 12 ? h - 12 : h;
+    const o = document.createElement("option");
+    o.value = h; o.textContent = String(d12).padStart(2,'0');
+    sel.appendChild(o);
+  }
+  document.getElementById("horaM").value = "";
+  hide("horaResult");
+}
+
+function to12(h24, m) {
+  const ap = h24 >= 12 ? "pm" : "am";
+  const h12 = h24 > 12 ? h24-12 : (h24===0?12:h24);
+  return `${String(h12).padStart(2,'0')}:${String(m).padStart(2,'0')} ${ap}`;
+}
+
+function updateHoraInfo() {
+  const h = parseInt(document.getElementById("horaH").value);
+  const m = parseInt(document.getElementById("horaM").value);
+  if (isNaN(h)||isNaN(m)) { hide("horaResult"); return; }
+  const prev = Math.max(h*60+m-20, 0);
+  document.getElementById("horaDisplay").textContent = to12(h,m);
+  document.getElementById("horaPrev").textContent = to12(Math.floor(prev/60), prev%60);
+  show("horaResult");
+}
+
+function irAPaso3() {
+  if (selFranja === null) { show("errFranja"); document.getElementById("franjasGrid").scrollIntoView({behavior:"smooth"}); return; }
+  const h = parseInt(document.getElementById("horaH").value);
+  const m = parseInt(document.getElementById("horaM").value);
+  if (isNaN(h)||isNaN(m)) { show("errHora"); return; }
+  hide("errHora");
+  const prev = Math.max(h*60+m-20, 0);
+  document.getElementById("bannerHora").textContent = to12(h,m);
+  document.getElementById("bannerPrep").textContent = to12(Math.floor(prev/60), prev%60);
+  document.getElementById("formSection").classList.add("show");
+  setStep(3);
+  setTimeout(() => { document.getElementById("formSection").scrollIntoView({behavior:"smooth", block:"start"}); }, 80);
+}
+
+function volverHorario() {
+  document.getElementById("formSection").classList.remove("show");
+  setStep(selFranja!==null ? 2 : 1);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function setStep(active) {
+  [1,2,3].forEach(n => {
+    const c = document.getElementById("s"+n);
+    const l = document.getElementById("sl"+n);
+    c.className = "step-circle"+(n<active?" done":n===active?" active":"");
+    l.className = "step-text"+(n<active?" done":n===active?" active":"");
+  });
+  document.getElementById("line1").className = "step-bar"+(active>1?" done":"");
+  document.getElementById("line2").className = "step-bar"+(active>2?" done":"");
+}
+
+function show(id) { document.getElementById(id).style.display=""; }
+function hide(id) { document.getElementById(id).style.display="none"; }
+
+function showToast(msg, d=3500) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.style.display = "block";
+  setTimeout(()=>{ t.style.display="none"; }, d);
+}
+
+function sendOrder() {
+  const empresa = document.getElementById("fEmpresa").value.trim();
+  const dir     = document.getElementById("fDireccion").value.trim();
+  const pedido  = document.getElementById("fPedido").value.trim();
+  const h = parseInt(document.getElementById("horaH").value);
+  const m = parseInt(document.getElementById("horaM").value);
+  if (!empresa||!dir||!pedido) { show("errForm"); return; }
+  hide("errForm");
+  const prev = Math.max(h*60+m-20,0);
+  const msg =
+    `🛵 *NUEVO PEDIDO*\n\n`+
+    `🏢 *Empresa:* ${empresa}\n`+
+    `📍 *Dirección:* ${dir}\n`+
+    `🕐 *Hora de entrega:* ${to12(h,m)}\n`+
+    `⚠️ *Hacer pedido antes de:* ${to12(Math.floor(prev/60),prev%60)}\n`+
+    `📦 *Pedido:* ${pedido}\n\n`+
+    `_Delivery · Ayacucho · 15–20 min_`;
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,"_blank");
+  document.getElementById("fEmpresa").value="";
+  document.getElementById("fDireccion").value="";
+  document.getElementById("fPedido").value="";
+  document.getElementById("formSection").classList.remove("show");
+  selFranja=null; renderFranjas(); setStep(1);
+  showToast("✓ Pedido enviado — abriendo WhatsApp");
+}
+
+// init
+renderFranjas();
+setStep(1);
+document.getElementById("horaResult").style.display="none";
+document.getElementById("errFranja").style.display="none";
+document.getElementById("errHora").style.display="none";
+document.getElementById("errForm").style.display="none";
+</script>
+</body>
+</html>
